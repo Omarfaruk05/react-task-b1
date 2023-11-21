@@ -28,10 +28,22 @@ const AdminLoginPage = () => {
   const onSubmit = async (data) => {
     let sdk = new MkdSDK();
     //TODO
+    try {
+      const user = await sdk.login(data.email, data.password, "admin");
+      dispatch({
+        type: "LOGIN",
+        payload: { user, token: user?.token, role: user?.role },
+      });
+      navigate("/admin/dashboard");
+    } catch (error) {
+      if (error.message) {
+        setError("email", { message: error.message });
+      }
+    }
   };
 
   return (
-    <div className="w-full max-w-xs mx-auto">
+    <div className="w-full h-[90.5vh] max-w-xs mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8 "
