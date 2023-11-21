@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import MkdSDK from "../utils/MkdSDK";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Container } from "../components/Container";
 
 const AdminDashboardPage = () => {
   const [video, setVideo] = useState(null);
@@ -69,31 +72,9 @@ const AdminDashboardPage = () => {
           <h4 className="text-xl font-semibold"> Likes</h4>
         </div>
         {/* table content  */}
-        {video?.map((x) => (
-          <div
-            key={x.id}
-            className="md:grid md:grid-cols-4 gap-4 mt-4 border border-gray-600 py-2 px-4 rounded-2xl"
-          >
-            <div className="col-span-2 flex gap-2 font-semibold items-center">
-              <p>{x?.id}</p>
-              <div className="w-24 bg-gray-600 rounded-md">
-                <img className="w-24 rounded-md" src={x?.photo} alt="" />
-              </div>
-              <h3 className="text-xl">{x?.title}</h3>
-            </div>
-            <h4 className="text-lg">{x?.username}</h4>
-            <h4 className="text-lg ">{x?.like}</h4>
-          </div>
-        ))}
-      </div>
-      {/* pagination  */}
-      <div className=" w-full text-center mt-12">
-        <button
-          onClick={() => setpage(page + 1)}
-          className="text-black bg-[#9BFF00] px-4 py-1 rounded-lg"
-        >
-          {"Next ->"}
-        </button>
+        <DndProvider backend={HTML5Backend}>
+          <Container />
+        </DndProvider>
       </div>
     </div>
   );
