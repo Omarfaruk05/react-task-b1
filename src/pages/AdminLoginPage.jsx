@@ -5,6 +5,7 @@ import * as yup from "yup";
 import MkdSDK from "../utils/MkdSDK";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../authContext";
+import { GlobalContext, showToast } from "../globalContext";
 
 const AdminLoginPage = () => {
   const schema = yup
@@ -15,6 +16,7 @@ const AdminLoginPage = () => {
     .required();
 
   const { dispatch } = React.useContext(AuthContext);
+  const { dispatch: loginDispatch } = React.useContext(GlobalContext);
   const navigate = useNavigate();
   const {
     register,
@@ -27,23 +29,24 @@ const AdminLoginPage = () => {
 
   const onSubmit = async (data) => {
     let sdk = new MkdSDK();
-    //TODO
     try {
       const user = await sdk.login(data.email, data.password, "admin");
       dispatch({
         type: "LOGIN",
         payload: { user, token: user?.token, role: user?.role },
       });
+      showToast(loginDispatch, "Login Successfull", 3000);
       navigate("/admin/dashboard");
     } catch (error) {
       if (error.message) {
-        setError("email", { message: error.message });
+        setError({ message: error.message });
+        showToast(loginDispatch, "Something went wrong.", 3000);
       }
     }
   };
 
   return (
-    <div className="w-full h-[90.5vh] max-w-xs mx-auto">
+    <div className="w-full max-w-xs mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-8 "

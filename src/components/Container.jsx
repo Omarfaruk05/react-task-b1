@@ -9,9 +9,6 @@ export const Container = () => {
   {
     const [video, setVideo] = useState([]);
 
-    const currentDate = new Date();
-    const formattedDate = currentDate.toDateString();
-
     const sdk = new MkdSDK();
     useEffect(() => {
       async function response() {
@@ -21,7 +18,7 @@ export const Container = () => {
             "PAGINATE"
           );
           setVideo(videoData.list);
-          console.log(video); // Log the video state here
+          console.log(video);
         } catch (error) {
           if (error.message) {
             console.log(error.message);
@@ -33,7 +30,17 @@ export const Container = () => {
     }, [page]);
 
     if (!video) {
-      return <div>hhh</div>;
+      return (
+        <div className=" w-full flex justify-center items-center">
+          <button
+            type="button"
+            class="bg-indigo-500 rounded-md flex text-3xl px-4 py-2"
+            disabled
+          >
+            Loading...
+          </button>
+        </div>
+      );
     }
     const moveCard = useCallback((dragIndex, hoverIndex) => {
       setVideo((prevCards) =>

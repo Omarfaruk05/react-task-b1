@@ -1,16 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../authContext";
+import { GlobalContext, showToast } from "../globalContext";
 
 const Nav = () => {
   const { dispatch } = React.useContext(AuthContext);
+  const { dispatch: logoutDispatch } = React.useContext(GlobalContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch({
-      type: "LOGOUT",
-    });
-    navigate("/admin/login");
+    try {
+      dispatch({
+        type: "LOGOUT",
+      });
+      showToast(logoutDispatch, "Successfully logout", 3000);
+      navigate("/admin/login");
+    } catch (error) {
+      if (error.message) {
+        setError({ message: error.message });
+        showToast(logoutDispatch, "Something went wrong.", 3000);
+      }
+    }
   };
   return (
     <div className="flex justify-between items-center bg-[#21261c] p-3 rounded-md sticky top-0">

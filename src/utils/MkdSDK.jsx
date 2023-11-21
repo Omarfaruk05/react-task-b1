@@ -14,7 +14,6 @@ export default function MkdSDK() {
   };
 
   this.login = async function (email, password, role) {
-    //TODO
     const payload = {
       email: email,
       password: password,
@@ -41,7 +40,6 @@ export default function MkdSDK() {
       throw new Error(jsonLogin.message);
     }
 
-    // Assuming the server returns a token upon successful login
     localStorage.setItem("token", jsonLogin.token);
 
     return jsonLogin;
@@ -120,8 +118,6 @@ export default function MkdSDK() {
   };
 
   this.check = async function (role) {
-    console.log(role);
-    //TODO
     const checkResult = await fetch(this._baseurl + "/v2/api/lambda/check", {
       method: "POST",
       headers: this.getHeader(),

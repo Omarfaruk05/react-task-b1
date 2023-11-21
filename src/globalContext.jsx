@@ -30,7 +30,8 @@ const reducer = (state, action) => {
   }
 };
 
-export const showToast = (dispatch, message, timeout = 3000) => {
+export const showToast = (dispatch, message, time = 3000) => {
+  console.log(message);
   dispatch({
     type: "SNACKBAR",
     payload: {
@@ -45,7 +46,7 @@ export const showToast = (dispatch, message, timeout = 3000) => {
         message: "",
       },
     });
-  }, timeout);
+  }, time);
 };
 
 const GlobalProvider = ({ children }) => {

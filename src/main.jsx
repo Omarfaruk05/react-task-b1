@@ -15,6 +15,7 @@ function renderRoutes(role) {
             path="/admin/dashboard"
             element={<AdminDashboardPage />}
           ></Route>
+          <Route path="*" exact element={<NotFoundPage />}></Route>
         </Routes>
       );
       break;
@@ -33,7 +34,7 @@ function Main() {
   const { state } = React.useContext(AuthContext);
 
   return (
-    <div className="h-full bg-[#111] text-white">
+    <div className="min-h-screen bg-[#111] text-white">
       <div className="flex w-full">
         <div className="w-full">
           <div className="page-wrapper w-full py-10 px-5">
